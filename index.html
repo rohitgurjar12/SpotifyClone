@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="assets/logo.png" />
+    <title>Spotify - Web Player: Music for everyone</title>
+
+</head>
+
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <div class="nav">
+                <div class="navoption opacity" style="opacity:1">
+                    <img src="assets/Spotify-Logo.webp" style="height: 9rem; padding-left: 15px;">
+                </div>
+            </div>
+            <div class="library">
+                <div class="options">
+                    <div class="liboption navoption" style="cursor:pointer;">
+                        <img src="assets/library_icon.png">
+                        <a href="profile.html" style="margin-right: 5px;">Your Library</a>
+                    </div>
+                    <div class="icons">
+                        <i class="fa-solid fa-plus" id="indexLibraryPlus" style="cursor:pointer;"></i>
+                        <i class="fa-solid fa-arrow-right" id="indexLibraryArrow" style="cursor:pointer;"></i>
+                    </div>
+                </div>
+            <div class="lib-box">
+                    <div class="box">
+                        <p class="box-p1">Create your first playlist</p>
+                        <p class="box-p2">It's easy ,we'll help you</p>
+                        <button class="badge" id="indexCreatePlaylistBtn">Create playlist</button>
+                    </div>
+                </div>
+                <div class="lib-box">
+                    <div class="box">
+                        <p class="box-p1">Let's find some podcasts to follow</p>
+                        <p class="box-p2">we'll keep you updated on new episodes</p>
+                        <button class="badge">Browse podcasts</button>
+                    </div>
+                </div>
+                <div class="lib-box">
+                    <div class="box">
+                        <p class="box-p1">Create your wishlist</p class="box-p2">what you loved to listens</p>
+                        <button class="badge" id="indexCreateWishlistBtn">Create wishlist</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="maincontent">
+            <div class="stickynav"
+                style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem 0 2rem;">
+                <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+                    <div class="navoption opacity"
+                        style="opacity:1; font-size: 1.3rem; font-weight: bold; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-house"></i>
+                        <a href="#" style="font-size: 1.2rem; color: #fff; text-decoration: none;">Home</a>
+                    </div>
+                </div>
+                <div style="flex: 2; display: flex; justify-content: center; align-items: center;">
+                    <div
+                        style="display: flex; align-items: center; background: #222; border-radius: 25px; width: 400px; height: 45px; position: relative;">
+                        <!-- Search icon -->
+                        <span
+                            style="display: flex; align-items: center; justify-content: center; width: 44px; height: 100%;">
+                            <i class="fa fa-search" style="color: #b3b3b3; font-size: 1.3rem;"></i>
+                        </span>
+                        <!-- Input -->
+                        <input type="search" placeholder="What do you want to play?"
+                            style="flex: 1; background: transparent; border: none; outline: none; color: #fff; font-size: 1rem; padding: 0 0.5rem;" />
+                        <!-- Divider -->
+                        <span style="height: 60%; width: 1px; background: #444; margin: 0 10px;"></span>
+                        <!-- Browse icon from assets -->
+                        <span
+                            style="display: flex; align-items: center; justify-content: center; width: 44px; height: 100%; cursor: pointer;">
+                            <img src="assets/browse.png" alt="browse"
+                                style="height: 36px; width: 35px; padding-right: 15px; object-fit: contain; ;" />
+                        </span>
+                    </div>
+                </div>
+                <div class="stickynavoptions">
+                    <button class="badge nav-item hide explore-btn-nav">Explore Premium</button>
+                    <button class="badge nav-item darkbadge"><i class="fa-regular fa-circle-down"
+                            style="margin-right: 5px; height: 0.5rem;"></i>Install App</button>
+                    <button class="badge nav-item hide Signup-btn-nav">Sign Up</button>
+                    <button class="badge nav-item hide login-btn-nav" style="cursor: pointer;">Log In <i
+                            class="fa-regular fa-user" style="cursor: pointer; height: 0.5rem;"></i> </button>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <span class="heading">
+                    <h2>Recently Played</h2>
+                </span>
+                <span class="subheading">
+                    <h5 style="opacity: 0.7;">Show all</h5>
+                </span>
+            </div>
+            <div class="card-container">
+                <div class="card">
+                    <img src="assets/top global.jpeg" class="card-img">
+                    <p class="card-title">Top Songs Global</p>
+                    <p class="card-info">Your daily update of the most played tracks right...</p>
+                    <a href="https://open.spotify.com/playlist/37i9dQZEVXbNG2KDcFcKOF?si=A24NTT2kQwiEKYz53S31gA"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/card6img.jpeg" class="card-img">
+                    <p class="card-title">Top Songs India</p>
+                    <p class="card-info">Your daily update of the most played tracks right...</p>
+                    <a href="https://open.spotify.com/playlist/37i9dQZEVXbMWDif5SCBJq?si=teFFfqEiRDWldJlOWvhCoA"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/card1img.jpeg" class="card-img">
+                    <p class="card-title">Top 50 - Global</p>
+                    <p class="card-info">Your daily update of the most played tracks right...</p>
+                    <a href="https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF?si=QM6GZJl5Tb2hbT5g-OEuOA"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/top india.jpeg" class="card-img">
+                    <p class="card-title">Top 50- India</p>
+                    <p class="card-info">Your daily update of the most played tracks right...</p>
+                    <a href="https://open.spotify.com/playlist/37i9dQZEVXbLZ52XmnySJg?si=Sfg0Qrj7SXGdt6pKSBTNHw"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/viral global.jpeg" class="card-img">
+                    <p class="card-title">Viral 50 Global</p>
+                    <p class="card-info">Your daily update of the most played tracks right...</p>
+                    <a href="https://open.spotify.com/playlist/37i9dQZEVXbLiRSasKsNU9?si=I0d9op8cQBSwUBnfT7pEGQ"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/viral india.jpeg" class="card-img">
+                    <p class="card-title">Viral 50 India</p>
+                    <p class="card-info">Your daily update of the most played tracks right...</p>
+                    <a href="https://open.spotify.com/playlist/37i9dQZEVXbK4NvPi6Sxit?si=9UT0E_VqR1eRSZD0h0ehQQ"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2 class="heading">Trending now near you</h2>
+                <h5 class="subheading" style="opacity: 0.7;">Show all</h5>
+            </div>
+            <div class="card-container">
+                <div class="card">
+                    <img src="assets/bymyside.webp" class="card-img">
+                    <p class="card-title">By My Side</p>
+                    <p class="card-info">Ap Dhillon, Shinda khalon</p></br>
+                    <a href="https://open.spotify.com/track/2mt3QHYbKBMdSTIfzSFsYH?si=5b1bdc7c7375423f"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/dhadak 2.png" class="card-img">
+                    <p class="card-title">Bas Ek Dhadak - Dhadak 2</p>
+                    <p class="card-info">Shreya Ghoshal, Jubin Nautiyal</p>
+                    <a href="https://open.spotify.com/track/1aV0CbIZbMGpYRFyTh4apW?si=de6040ab86954492"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Malang.png" class="card-img">
+                    <p class="card-title">Malang- Title Track</p>
+                    <p class="card-info">Ved Sharma, Kunaal Vermaa</p></br>
+                    <a href="https://open.spotify.com/track/25MPTnqXQB1H6OkwSYUXWx?si=74928ef55d5d4c70"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/dhadak.png" class="card-img">
+                    <p class="card-title">Dhadak - Title Track</p>
+                    <p class="card-info">Ajay Gogavale, Shreya Ghoshal</p></br>
+                    <a href="https://open.spotify.com/track/4SrVkrpAyykhbVnATbfvPV?si=ea312078e3074dd9"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+
+                </div>
+                <div class="card">
+                    <img src="assets/Tera Hone Laga Hoon.png" class="card-img">
+                    <p class="card-title">Tera Hone Laga Hoon</p>
+                    <p class="card-info">Pritam, Atif Aslam, Alisha Chinai</p></br>
+                    <a href="https://open.spotify.com/track/0dLbrlAVPPjpPqnYfmJsWk?si=f1cf81881a614fd0"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Tum Hi Ho.png" class="card-img">
+                    <p class="card-title">Tum Hi Ho</p>
+                    <p class="card-info">Arijit Singh, Mitoon</p></br>
+                    <a href="https://open.spotify.com/track/56zZ48jdyY2oDXHVnwg5Di?si=681fff6a81044716"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Sitaare.png" class="card-img">
+                    <p class="card-title">Sitaare</p>
+                    <p class="card-info">Arijit Singh</p></br>
+                    <a href="https://open.spotify.com/track/6WlARP6h4CDVOcY386wW0W?si=f2fff0c7f50146bc"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/I Think they call this love.png" class="card-img">
+                    <p class="card-title">I Think they call this love</p>
+                    <p class="card-info">Matthew Ifield</p></br>
+                    <a href="https://open.spotify.com/track/14mT8BCOXiUUcGlb7KujkT?si=92da5e007f274dea"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/card2img.jpeg" class="card-img">
+                    <p class="card-title">Mahiye Jinna Sohna </p>
+                    <p class="card-info">Darshan Raval</p></br>
+                    <a href="https://open.spotify.com/track/2ncqKdTj6dz7tWoTMMrAtq?si=5270c0cb50cd45cb"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; ;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Pasoori.png" class="card-img">
+                    <p class="card-title">Pasoori</p>
+                    <p class="card-info">Shae gill, Ali sethi</p></br>
+                    <a href="https://open.spotify.com/track/5pbyX9TBY2wolSfxaisJWc?si=468c3ada10234688"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; ;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Kaatilana.png" class="card-img">
+                    <p class="card-title">Kaatilana</p>
+                    <p class="card-info">Talwiinder</p>
+                    <a href="https://open.spotify.com/track/4gAYB5yzeYrQ0jz13FmFOV?si=13c96fb4c9df4f3c"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; ;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/I'm Done.png" class="card-img">
+                    <p class="card-title">I'm Done</p>
+                    <p class="card-info">Maan Panu</p></br>
+                    <a href="https://open.spotify.com/track/0YRpv07J0y7J73X87efpia?si=cead4396005748f4"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; ;"></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/chanel.png" class="card-img">
+                    <p class="card-title">Chanel</p>
+                    <p class="card-info">Tyla</p>
+                    <a href="https://open.spotify.com/track/3yWuTOYDztXjZxdE2cIRUa?si=b19b951db9244474"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Boyfriend.png" class="card-img">
+                    <p class="card-title">Boyfriend</p>
+                    <p class="card-info">Karan Aujla</p>
+                    <a href="https://open.spotify.com/track/3ExgWVPWOQts9RVBkqpdic?si=627f55048e224954"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Tere hi baaton.png" class="card-img">
+                    <p class="card-title">Tere Hi Baaton</p>
+                    <p class="card-info">Vishal Patil- TVF Music</p>
+                    <a href="https://open.spotify.com/track/5Kc5Yz6hGw8IWwcDvh3xuQ?si=84d4e119db97419b"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+
+            </div>
+
+            <div class="section-header">
+                <h2 class="heading">Popular Artist</h2>
+                <h5 class="subheading" style="opacity: 0.7;">Show all</h5>
+            </div>
+            <div class="card-container2">
+                <div class="artist-div">
+                    <img src="assets/arijit.png" class="artist-card">
+                    <p class="card-title">Arijit Singh</p>
+                    <p class="card-info">Artist</p>
+                    <a href="https://open.spotify.com/artist/4YRxDV8wJFPHPTeXepOstw?si=aad6628915664e3c"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                            <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="artist-div">
+                    <img src="assets/lana.png" class="artist-card">
+                    <p class="card-title">Lana Del Ray</p>
+                    <p class="card-info">Artist</p>
+                    <a href="https://open.spotify.com/artist/00FQb4jTyendYWaN8pK0wa?si=LIvNj35LQZiO_Pj_kCT8ow"><img src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                            <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="artist-div">
+                    <img src="assets/shreya.png" class="artist-card">
+                    <p class="card-title">Shreya Ghoshal</p>
+                    <p class="card-info">Artist</p>
+                    <a href="https://open.spotify.com/artist/0oOet2f43PA68X5RxKobEy?si=t00pQzYaRSW4WxtUukAI8w"><img src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                            <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="artist-div">
+                    <img src="assets/atif.png" class="artist-card">
+                    <p class="card-title">Atif Aslam</p>
+                    <p class="card-info">Artist</p>
+                    <a href="https://open.spotify.com/artist/2oSONSC9zQ4UonDKnLqksx?si=q8B_-T4WQCKo0kEvxvDuYg"><img src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                            <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="artist-div">
+                    <img src="assets/diljit.png" class="artist-card">
+                    <p class="card-title">Diljit Dosanjh</p>
+                    <p class="card-info">Artist</p>
+                    <a href="https://open.spotify.com/artist/2FKWNmZWDBZR4dE5KX4plR?si=a5oUbQpvQJa3KmA0xAF46g"><img src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                            <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="artist-div">
+                    <img src="assets/honey.png" class="artist-card">
+                    <p class="card-title">Yo Yo Honey Singh</p>
+                    <p class="card-info">Artist</p>
+                    <a href="https://open.spotify.com/artist/7uIbLdzzSEqnX0Pkrb56cR?si=9XNJ-PU3S-Gq7oleic1e4w"><img src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img><a>
+                            <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="artist-div">
+                    <img src="assets/a.r..png" class="artist-card">
+                    <p class="card-title">A. R. Rahman</p>
+                    <p class="card-info">Artist</p>
+                    <a href="https://open.spotify.com/artist/1mYsTxnqsietFxj1OgoGbG?si=LGUWcpAbSOuJyuzkA4NPfA"><img src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img><a>
+                            <audio id="audio" src="song.mp3"></audio>
+                </div>
+            </div>
+
+
+
+            <div class="section-header">
+                <h2 class="heading">Your Favorites</h2>
+                <h5 class="subheading" style="opacity: 0.7;">Show all</h5>
+            </div>
+            <div class="card-container">
+                <div class="card">
+                    <img src="assets/Sitaare.png" class="card-img">
+                    <p class="card-title">Sitaare</p>
+                    <p class="card-info">Arijit Singh</p></br>
+                    <a href="https://open.spotify.com/track/6WlARP6h4CDVOcY386wW0W?si=f2fff0c7f50146bc"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Kaatilana.png" class="card-img">
+                    <p class="card-title">Kaatilana</p>
+                    <p class="card-info">Talwiinder</p></br>
+                    <a href="https://open.spotify.com/track/4gAYB5yzeYrQ0jz13FmFOV?si=13c96fb4c9df4f3c"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Tum Hi Ho.png" class="card-img">
+                    <p class="card-title">Tum Hi Ho</p>
+                    <p class="card-info">Arijit Singh, Mitoon</p></br>
+                    <a href="https://open.spotify.com/track/56zZ48jdyY2oDXHVnwg5Di?si=681fff6a81044716"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/jhol.png" class="card-img">
+                    <p class="card-title">Jhol</p>
+                    <p class="card-info">Maanu, Annural Khalid</p></br>
+                    <a href="https://open.spotify.com/track/4XTgFBxBHN6var1BzAgE1m?si=0b3f81150b784f6d"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/Aasa Kooda.png" class="card-img">
+                    <p class="card-title">Aasa Kooda</p>
+                    <p class="card-info">Thejo Bharathwaj, Preity Mukundhan</p>
+                    <a href="https://open.spotify.com/track/0MTdYgTZ25sLCO6kVnDoje?si=b4dbcc60c21a4253"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+                <div class="card">
+                    <img src="assets/finding her.png" class="card-img">
+                    <p class="card-title">Finding Her</p>
+                    <p class="card-info">Kushagra, Bharath</p></br>
+                    <a href="https://open.spotify.com/track/5ThyDv6aRVU8AH4vXQNldF?si=d077d808603a4093"><img
+                            src="assets/play.png" class="iconbtn" style="height: 40px; width: 40px; "></img></a>
+                    <audio id="audio" src="song.mp3"></audio>
+                </div>
+
+            </div> 
+            <br/><br/>
+            <hr style="opacity: 0.5;"/>
+            <div class="footer">
+                <div class="company-footer">
+                    <p>© 2026 Spotify Clone</p>
+                    <p><a href="#" onclick="return false;">Privacy Policy</a></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="musicplayer">
+
+            <div class="album">
+                <img class="image" src="./assets/album_picture.jpeg">
+                <div class="name">
+                    <p class="song">Daylight</p>
+                    <br>
+                    <p class="singer">David kushner</p>
+                </div>
+                <img class="emoji1" style="height: 1.3rem;" src="./assets/album_icon1.png">
+                <img class="emoji2" style="height: 2.2rem;" src="./assets/album_icon2.png">
+            </div>
+
+
+            <div class="player">
+                <div class="player-controls">
+                    <img src="./assets/player_icon1.png" class="player-control-icon">
+                    <img src="./assets/player_icon2.png" class="player-control-icon">
+                    <img src="./assets/player_icon3.png" class="player-control-icon"
+                        style="opacity: 1; height:1.82rem;">
+                    <img src="./assets/player_icon4.png" class="player-control-icon">
+                    <img src="./assets/player_icon5.png" class="player-control-icon">
+                </div>
+                <div class="playback-bar">
+                    <span class="curr-time">00.00</span>
+                    <input type="range" min="0" max="100" class="progess-bar" step="1">
+                    <span class="tot-time">03:33</span>
+                </div>
+            </div>
+
+
+            <div class="controls">
+
+                <img src="./assets/controls_icon3.png" height="20px" style="opacity: 0.7; margin: 5px;" class="img">
+                <img src="./assets/controls_icon4.png" height="15px" style="opacity: 0.7; margin: 5px" class="img">
+                <img src="./assets/controls_icon5.png" height="40px" style="margin: 5px;" class="img">
+                <input class="volume" type="range" min="0" max="100" class="progess-bar" step="1"
+                    style="width: 70px; padding-right: 5px;">
+
+<script src="main.js"></script>
+                <script src="library.js"></script>
+                <script>
+                    // Wire library buttons to create playlist / wishlist quickly
+                    window.addEventListener('DOMContentLoaded', () => {
+                        const user = localStorage.getItem('spotifyUser');
+                        const plus = document.getElementById('indexLibraryPlus');
+                        const arrow = document.getElementById('indexLibraryArrow');
+
+                        const ensureProfile = () => {
+                            if (!user) {
+                                window.location.href = 'login.html';
+                                return false;
+                            }
+                            window.location.href = 'profile.html';
+                            return true;
+                        };
+
+                        if (plus) {
+                            plus.addEventListener('click', () => {
+                                if (!user) return window.location.href = 'login.html';
+                                const name = prompt('Playlist name?');
+                                if (!name) return;
+                                // Save via library.js helper if available
+                                if (window.spotifyLibrary && window.spotifyLibrary.createPlaylist) {
+                                    window.spotifyLibrary.createPlaylist(name.trim());
+                                } else {
+                                    // Fallback: store directly
+                                    const playlists = JSON.parse(localStorage.getItem('spotifyPlaylists') || '[]');
+                                    const id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+                                    playlists.unshift({ id, name: name.trim(), tracks: [], createdAt: Date.now() });
+                                    localStorage.setItem('spotifyPlaylists', JSON.stringify(playlists));
+                                }
+                                ensureProfile();
+                            });
+                        }
+
+                        const createPlaylistBtn = document.getElementById('indexCreatePlaylistBtn');
+                        const createWishlistBtn = document.getElementById('indexCreateWishlistBtn');
+
+                        if (createPlaylistBtn) {
+                            createPlaylistBtn.addEventListener('click', () => {
+                                if (!user) return window.location.href = 'login.html';
+                                const name = prompt('Playlist name?');
+                                if (!name) return;
+                                if (window.spotifyLibrary && window.spotifyLibrary.createPlaylist) {
+                                    window.spotifyLibrary.createPlaylist(name.trim());
+                                } else {
+                                    const playlists = JSON.parse(localStorage.getItem('spotifyPlaylists') || '[]');
+                                    const id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+                                    playlists.unshift({ id, name: name.trim(), tracks: [], createdAt: Date.now() });
+                                    localStorage.setItem('spotifyPlaylists', JSON.stringify(playlists));
+                                }
+                                ensureProfile();
+                            });
+                        }
+
+                        if (createWishlistBtn) {
+                            createWishlistBtn.addEventListener('click', () => {
+                                if (!user) return window.location.href = 'login.html';
+                                // library.js provides a wishlist demo creator via UI button on profile,
+                                // but on index we can simply ensure wishlist exists by adding a demo track.
+                                if (window.spotifyLibrary && window.spotifyLibrary.addTrackToWishlist) {
+                                    window.spotifyLibrary.addTrackToWishlist({
+                                        title: 'Demo Song',
+                                        artist: 'Demo Artist',
+                                        cover: 'assets/album_picture.jpeg',
+                                        sourceUrl: '#'
+                                    });
+                                }
+                                ensureProfile();
+                            });
+                        }
+
+                        if (arrow) {
+                            arrow.addEventListener('click', () => ensureProfile());
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

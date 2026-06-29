@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="assets/logo.png" />
+    <title>Spotify - Profile</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <div class="nav">
+                <div class="navoption opacity" style="opacity:1">
+                    <img src="assets/Spotify-Logo.webp" style="height: 9rem; padding-left: 15px;">
+                </div>
+            </div>
+
+            <div class="library">
+                <div class="options">
+                    <div class="liboption navoption" style="cursor:pointer;" id="yourLibraryLink">
+                        <img src="assets/library_icon.png" />
+                        <a href="#" style="margin-right: 5px;" onclick="return false;">Your Library</a>
+                    </div>
+                    <div class="icons">
+                        <i class="fa-solid fa-plus" id="libraryPlusBtn" title="Add"></i>
+                        <i class="fa-solid fa-arrow-right" id="libraryArrowBtn" title="Explore"></i>
+                    </div>
+                </div>
+
+                <div class="lib-box">
+                    <div class="box">
+                        <p class="box-p1">Create your first playlist</p>
+                        <p class="box-p2">It's easy ,we'll help you</p>
+                        <button class="badge" id="createPlaylistBtn">Create playlist</button>
+                    </div>
+                </div>
+
+                <div class="lib-box">
+                    <div class="box">
+                        <p class="box-p1">Create your wishlist</p>
+                        <p class="box-p2">what you loved to listens</p>
+                        <button class="badge" id="createWishlistBtn">Create wishlist</button>
+                    </div>
+                </div>
+
+                <div class="lib-box" style="margin-top: 1rem;">
+                    <div class="box">
+                        <p class="box-p1" style="margin-bottom:0.5rem;">Logged in as</p>
+                        <p class="box-p2" style="opacity:0.95; margin-bottom:0.5rem;" id="profileUserLine">-</p>
+                        <button class="badge darkbadge" id="logoutBtn" style="margin-top:0.75rem;">Log Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="maincontent">
+            <div class="section-header" style="margin-top: 0.5rem; gap: 1rem;">
+                <button class="badge" onclick="window.history.back()" style="display:inline-flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back</span>
+                </button>
+                <span class="heading">
+                    <h2>User Profile</h2>
+                </span>
+                <span class="subheading" style="opacity:0.75;">
+                    <h5 class="subheading-link" id="profileMeta">Spotify user</h5>
+                </span>
+            </div>
+
+            <div class="section-header" style="margin-top: 1.2rem;">
+                <span class="heading">
+                    <h2>Your Playlists</h2>
+                </span>
+                <span class="subheading">
+                    <h5 class="subheading-link" id="playlistsCount">0</h5>
+                </span>
+            </div>
+
+            <div class="playlist-section" id="playlistsSection">
+                <!-- populated by library.js -->
+            </div>
+
+            <div class="section-header" style="margin-top: 2rem;">
+                <h2 class="heading">Your Wishlist</h2>
+                <h5 class="subheading" style="opacity: 0.7;" id="wishlistCount">0 items</h5>
+            </div>
+
+            <div class="wishlist-section" id="wishlistSection">
+                <!-- populated by library.js -->
+            </div>
+
+            <div class="footer">
+                <div class="line"></div>
+
+                <div class="company-footer">
+                    <p>© 2026 Spotify Clone</p>
+                    <p><a href="#" onclick="return false;">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="library.js"></script>
+    <script>
+        // Wire logout without relying on main.js
+        window.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to log out?')) {
+                        localStorage.removeItem('spotifyUser');
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
+

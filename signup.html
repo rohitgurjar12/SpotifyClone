@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="./assets/logo.png" />
+    <title>Spotify - SignUp</title>
+</head>
+
+<body style="background: linear-gradient(220deg, #1DB954, #000000);">
+    <div class="signup-container">
+        <div class="signup-box">
+            <img src="assets/logo.png" alt="Spotify Logo" class="signup-logo">
+            <h1>Welcome To Spotify</h1>
+            <p class="signup-subtitle">Your Music, Your Way</p>
+            
+            <form id="signupForm" class="signup-form">
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                    <input type="name" id="name" name="firstname" placeholder="First Name"><br/><br/>
+
+                    <label for="name">Last Name</label>
+                    <input type="name" id="name" name="lastname" placeholder="Last Name"><br/><br/>
+
+                    <label for="email">Email </label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+
+            <div class="signup-divider">OR</div>
+
+            <div class="social-signup">
+                <button type="button" class="social-btn google-btn">
+                    <i class="fab fa-google"></i>
+                    <span>Sign in with Google</span>
+                </button>
+                <button type="button" class="social-btn facebook-btn">
+                    <i class="fab fa-facebook"></i>
+                    <span>Sign in with Facebook</span>
+                </button>
+                <button type="button" class="social-btn apple-btn">
+                    <i class="fab fa-apple"></i>
+                    <span>Continue with Apple</span>
+                </button>
+                <button type="button" class="social-btn phone-btn" onclick="showPhoneInput()">
+                    <i class="fas fa-phone"></i><span>Continue with Phone Number</span>
+                    </button>
+                    </div>
+
+
+
+            <div class="signup-footer">
+                <p>Do have an account? <a href="#" class="login-link">Log In</a></p>
+            </div>
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email && password) {
+                // Store user data in localStorage
+                localStorage.setItem('spotifyUser', JSON.stringify({
+                    name:name,
+                    email: email,
+                    loggedIn: true,
+                    loginTime: new Date().toLocaleString(),
+                    password: password
+                }));
+
+                // Redirect to main page
+                window.location.href = 'index.html';
+            }
+        });
+
+        document.querySelector('.login-link').addEventListener('click', function() {
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
