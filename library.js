@@ -2,7 +2,22 @@
   const STORAGE_KEYS = {
     playlists: 'spotifyPlaylists',
     wishlist: 'spotifyWishlist',
+    liked: 'spotifyLikedSongs',
   };
+
+  const getUserKeySuffix = () => {
+    const user = (() => {
+      try {
+        return JSON.parse(localStorage.getItem('spotifyUser') || 'null');
+      } catch {
+        return null;
+      }
+    })();
+    const identity = user?.email || user?.phone || user?.name || 'guest';
+    return String(identity).trim().toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'guest';
+  };
+
+  const getScopedStorageKey = (key) => `${key}_${getUserKeySuffix()}`;
 
   const $ = (sel, parent = document) => parent.querySelector(sel);
   const $$ = (sel, parent = document) => Array.from(parent.querySelectorAll(sel));
@@ -10,7 +25,6 @@
   const ensureLoggedIn = () => {
     const userRaw = localStorage.getItem('spotifyUser');
     if (!userRaw) {
-      window.location.href = 'login.html';
       return null;
     }
     try {
@@ -26,7 +40,7 @@
       : String(Date.now()) + '_' + Math.random().toString(16).slice(2);
 
   const loadJSON = (key, fallback) => {
-    const raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(getScopedStorageKey(key));
     if (!raw) return fallback;
     try {
       const parsed = JSON.parse(raw);
@@ -36,7 +50,7 @@
     }
   };
 
-  const saveJSON = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+  const saveJSON = (key, value) => localStorage.setItem(getScopedStorageKey(key), JSON.stringify(value));
 
   const normalizeTrack = (track) => {
     // Minimal structure for demo.
@@ -55,33 +69,37 @@
     container.innerHTML = `
       <div class="empty-state">
         <p>${message}</p>
+        
       </div>
     `;
   };
 
   const trackCard = (track, opts = {}) => {
+    const wishlistBtnLabel = opts.wishlistIn ? 'Remove' : 'Add to wishlist';
+    const wishlistBtnIcon = opts.wishlistIn ? 'fa-solid fa-xmark' : 'fa-solid fa-heart';
+
     const coverHTML = track.cover
       ? `<img class="track-cover" src="${track.cover}" alt="cover">`
       : `<div class="track-cover placeholder"></div>`;
 
-    const wishlistBtnLabel = opts.wishlistIn ? 'Remove' : 'Add to wishlist';
-    const wishlistBtnIcon = opts.wishlistIn ? 'fa-solid fa-xmark' : 'fa-solid fa-heart';
+    const wishlistButtonHTML = opts.showWishlistButton
+      ? `
+        <button class="badge wishlist-toggle" type="button" data-track-id="${track.id}" data-wishlist-action="${opts.wishlistIn ? 'remove' : 'add'}" aria-label="${escapeAttr(wishlistBtnLabel)} ${escapeAttr(track.title)}">
+          <i class="fa ${wishlistBtnIcon}"></i>
+          <span>${wishlistBtnLabel}</span>
+        </button>
+      `
+      : '';
 
     return `
-      <div class="track-item" data-track-id="${track.id}">
+      <div class="track-item" data-track-id="${track.id}" data-track-title="${escapeAttr(track.title)}" data-track-artist="${escapeAttr(track.artist)}" data-track-cover="${escapeAttr(track.cover || '')}">
         ${coverHTML}
         <div class="track-meta">
           <div class="track-title">${escapeHTML(track.title)}</div>
           <div class="track-artist">${escapeHTML(track.artist)}</div>
         </div>
         <div class="track-actions">
-          ${opts.showWishlistButton ? `
-            <button class="badge wishlist-toggle" data-track-id="${track.id}" data-wishlist-action="${opts.wishlistIn ? 'remove' : 'add'}">
-              <i class="fa ${wishlistBtnIcon}"></i>
-              <span>${wishlistBtnLabel}</span>
-            </button>
-          ` : ''}
-        
+          ${wishlistButtonHTML}
         </div>
       </div>
     `;
@@ -148,15 +166,41 @@
   // --------- Rendering ----------
   const renderProfileUser = (user) => {
     const el = $('#profileUserLine');
+    const nameEl = $('#profileDisplayName');
+    const topRight = $('#profileTopRight');
+    const avatar = document.querySelector('.profile-avatar');
+    const display = user?.name || user?.email || user?.phone || 'User';
+    const email = user?.email || user?.phone || 'ro3@gmail.com';
     if (el) {
-      const display = user?.name || user?.email || user?.phone || 'User';
       el.textContent = display;
+    }
+    if (nameEl) {
+      nameEl.textContent = display;
+    }
+    if (topRight) {
+      topRight.textContent = email;
+    }
+
+    const initials = display
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() || '')
+      .join('') || 'U';
+
+    if (avatar) {
+      const seed = [...display].reduce((total, char) => total + char.charCodeAt(0), 0);
+      const hueA = seed % 360;
+      const hueB = (hueA + 55) % 360;
+      avatar.textContent = initials;
+      avatar.style.background = `linear-gradient(135deg, hsl(${hueA} 75% 58%), hsl(${hueB} 72% 44%))`;
+      avatar.style.boxShadow = `0 0 0 1px rgba(255,255,255,0.06), 0 14px 28px hsla(${hueA} 70% 50% / 0.35)`;
     }
 
     const meta = $('#profileMeta');
     if (meta) {
-      const display = user?.name || user?.email || user?.phone || 'Spotify user';
-      meta.textContent = display;
+      meta.textContent = display === 'User' ? 'Spotify user' : display;
     }
   };
 
@@ -195,9 +239,6 @@
                   <i class="fa-solid fa-trash"></i>
                   <span>Remove</span>
                 </button>
-                <button class="badge add-demo-track" data-playlist-id="${p.id}">
-                  <i class="fa-solid fa-plus"></i> <span>Add demo track</span>
-                </button>
               </div>
             </div>
             <div class="playlist-tracks">${tracksHTML}</div>
@@ -225,7 +266,84 @@
       .join('');
   };
 
+  const renderLikedSongs = () => {
+    const likedSection = $('#likedSongsSection');
+    const likedCount = $('#likedSongsCount');
+    if (!likedSection) return;
+    const liked = loadJSON(STORAGE_KEYS.liked, []);
+    if (likedCount) likedCount.textContent = `${liked.length} songs`;
+    if (!liked.length) {
+      renderEmpty(likedSection, 'Songs you like will appear here.');
+      return;
+    }
+    likedSection.innerHTML = liked.map((track) => trackCard(track, { showWishlistButton: true, wishlistIn: false })).join('');
+  };
+
   const bindEvents = () => {
+    const handleTrackRowClick = (event) => {
+      const item = event.target.closest('.track-item');
+      if (!item || event.target.closest('.wishlist-toggle')) return;
+      const track = {
+        id: item.dataset.trackId,
+        title: item.dataset.trackTitle || 'Unknown title',
+        artist: item.dataset.trackArtist || 'Unknown artist',
+        cover: item.dataset.trackCover || 'assets/album_picture.jpeg',
+        sourceUrl: '#',
+      };
+      if (window.spotifyPlayer && typeof window.spotifyPlayer.playTrack === 'function') {
+        window.spotifyPlayer.playTrack(track);
+      } else {
+        localStorage.setItem(getScopedStorageKey('spotifyNowPlaying'), JSON.stringify(track));
+        window.location.href = 'player.html';
+      }
+    };
+
+    document.querySelectorAll('.track-item').forEach((item) => {
+      item.addEventListener('click', handleTrackRowClick);
+    });
+
+    document.addEventListener('click', (event) => {
+      const btn = event.target.closest('.wishlist-toggle');
+      if (!btn) return;
+      event.stopPropagation();
+
+      const trackId = btn.getAttribute('data-track-id');
+      const action = btn.getAttribute('data-wishlist-action');
+      if (!trackId) return;
+
+      if (action === 'add') {
+        const allTracks = [
+          ...loadJSON(STORAGE_KEYS.wishlist, []),
+          ...loadJSON(STORAGE_KEYS.liked, []),
+          ...loadJSON(STORAGE_KEYS.playlists, []).flatMap((playlist) => playlist.tracks || [])
+        ];
+        const existing = allTracks.find((track) => track.id === trackId);
+        if (existing) {
+          addToWishlist(existing);
+          renderWishlist();
+          return;
+        }
+
+        const item = event.target.closest('.track-item');
+        const track = item ? {
+          id: trackId,
+          title: item.dataset.trackTitle || 'Unknown title',
+          artist: item.dataset.trackArtist || 'Unknown artist',
+          cover: item.dataset.trackCover || 'assets/album_picture.jpeg',
+          sourceUrl: '#',
+        } : { id: trackId, title: 'Demo Song', artist: 'Demo Artist', cover: 'assets/album_picture.jpeg', sourceUrl: '#' };
+
+        addToWishlist(track);
+        renderWishlist();
+      }
+
+      if (action === 'remove') {
+        removeFromWishlist(trackId);
+        renderWishlist();
+        renderPlaylists();
+      }
+    });
+
     const createPlaylistBtn = $('#createPlaylistBtn');
     const createWishlistBtn = $('#createWishlistBtn');
 
@@ -240,16 +358,8 @@
 
     if (createWishlistBtn) {
       createWishlistBtn.addEventListener('click', () => {
-        // Wishlist array is created lazily; this button is just a nicer UX.
-        // Add a demo track so it becomes "working" immediately.
-        const demoTrack = {
-          title: 'Demo Song',
-          artist: 'Demo Artist',
-          cover: 'assets/album_picture.jpeg',
-          // sourceUrl: '#',
-        };
-        addToWishlist(demoTrack);
-        renderWishlist();
+        // Wishlist array is created lazily; users can add songs from home page.
+        alert('Add songs from the home page by clicking the heart icon.');
       });
     }
 
@@ -268,6 +378,7 @@
       wishlistSection.addEventListener('click', (e) => {
         const btn = e.target.closest('.wishlist-toggle');
         if (!btn) return;
+        e.stopPropagation();
 
         const trackId = btn.getAttribute('data-track-id');
         const action = btn.getAttribute('data-wishlist-action');
@@ -280,6 +391,17 @@
         }
       });
     }
+
+    const likedSection = $('#likedSongsSection');
+    if (likedSection) {
+      likedSection.addEventListener('click', (event) => {
+        const item = event.target.closest('.track-item');
+        if (!item || event.target.closest('.wishlist-toggle')) return;
+        const track = loadJSON(STORAGE_KEYS.liked, []).find((entry) => entry.id === item.dataset.trackId);
+        if (track) window.spotifyPlayer ? window.spotifyPlayer.playTrack(track) : (() => { localStorage.setItem(getScopedStorageKey('spotifyNowPlaying'), JSON.stringify(track)); window.location.href = 'player.html'; })();
+      });
+    }
+    window.addEventListener('spotifylikedchange', renderLikedSongs);
 
     const playlistsSection = $('#playlistsSection');
     if (playlistsSection) {
@@ -294,20 +416,6 @@
           renderWishlist();
           return;
         }
-        const btn = e.target.closest('.add-demo-track');
-        if (!btn) return;
-        const playlistId = btn.getAttribute('data-playlist-id');
-        if (!playlistId) return;
-
-        const demoTrack = {
-          title: 'Demo Song ' + new Date().toLocaleTimeString(),
-          artist: 'Demo Artist',
-          cover: 'assets/album_picture.jpeg',
-          sourceUrl: '#',
-        };
-
-        addToPlaylist(playlistId, demoTrack);
-        renderPlaylists();
       });
     }
 
@@ -346,16 +454,11 @@
   // --------- Init ----------
   const init = () => {
     const user = ensureLoggedIn();
-    if (!user) return;
-
     renderProfileUser(user);
-
-    // Seed storage shape if missing (so counts work nicely)
-    loadJSON(STORAGE_KEYS.playlists, []);
-    loadJSON(STORAGE_KEYS.wishlist, []);
 
     renderPlaylists();
     renderWishlist();
+    renderLikedSongs();
     bindEvents();
   };
 

@@ -32,6 +32,7 @@
                         <i class="fa-solid fa-arrow-right" id="libraryArrowBtn" title="Explore"></i>
                     </div>
                 </div>
+            
 
                 <div class="lib-box">
                     <div class="box">
@@ -60,20 +61,51 @@
         </div>
 
         <div class="maincontent">
-            <div class="section-header" style="margin-top: 0.5rem; gap: 1rem;">
-                <button class="badge" onclick="window.history.back()" style="display:inline-flex; align-items:center; gap:8px;">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Back</span>
-                </button>
+            <div class="profile-topbar">
+                <a style="padding-top: 2rem;" class="player-back" href="index.html"><i class="fa-solid fa-arrow-left"></i> Back</a>
+            </div>
+
+            <div class="profile-hero">
+                <div class="profile-avatar-wrap">
+                    <div class="profile-avatar" aria-label="Profile photo">
+                        <div class="profile-avatar-overlay">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-meta-block">
+                    <div class="profile-label">Profile</div>
+                    <h1 id="profileDisplayName">Rohit</h1>
+                </div>
+            </div>
+
+            <!-- <div class="section-header" style="margin-top: 1rem; gap: 1rem;">
+            </div> -->
+
+            <div class="section-header" id="likedSongs" style="margin-top: 1.2rem;">
                 <span class="heading">
-                    <h2>User Profile</h2>
+                    <h2>Liked Songs</h2>
                 </span>
-                <span class="subheading" style="opacity:0.75;">
-                    <h5 class="subheading-link" id="profileMeta">Spotify user</h5>
+                <span class="subheading">
+                    <h5 class="subheading-link" id="likedSongsCount">0 songs</h5>
+                </span>
+            </div>
+            <div class="wishlist-section" id="likedSongsSection"></div>
+
+            <div class="section-header" style="margin-top: 2rem;">
+                <span class="heading">
+                    <h2>Your Wishlist</h2>
+                </span>
+                <span class="subheading">
+                    <h5 class="subheading-link" id="wishlistCount">0 items</h5>
                 </span>
             </div>
 
-            <div class="section-header" style="margin-top: 1.2rem;">
+            <div class="wishlist-section" id="wishlistSection">
+                <!-- populated by library.js -->
+            </div>
+
+            <div class="section-header" style="margin-top: 2rem;">
                 <span class="heading">
                     <h2>Your Playlists</h2>
                 </span>
@@ -83,15 +115,6 @@
             </div>
 
             <div class="playlist-section" id="playlistsSection">
-                <!-- populated by library.js -->
-            </div>
-
-            <div class="section-header" style="margin-top: 2rem;">
-                <h2 class="heading">Your Wishlist</h2>
-                <h5 class="subheading" style="opacity: 0.7;" id="wishlistCount">0 items</h5>
-            </div>
-
-            <div class="wishlist-section" id="wishlistSection">
                 <!-- populated by library.js -->
             </div>
 
@@ -107,6 +130,7 @@
 
     </div>
 
+    <script src="player.js"></script>
     <script src="library.js"></script>
     <script>
         // Wire logout without relying on main.js

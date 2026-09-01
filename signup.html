@@ -21,11 +21,11 @@
             
             <form id="signupForm" class="signup-form">
                 <div class="form-group">
-                    <label for="name">First Name</label>
-                    <input type="name" id="name" name="firstname" placeholder="First Name"><br/><br/>
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstname" placeholder="First Name"><br/><br/>
 
-                    <label for="name">Last Name</label>
-                    <input type="name" id="name" name="lastname" placeholder="Last Name"><br/><br/>
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastname" placeholder="Last Name"><br/><br/>
 
                     <label for="email">Email </label>
                     <input type="email" id="email" name="email" required placeholder="Enter your email">
@@ -65,26 +65,57 @@
                 <p>Do have an account? <a href="#" class="login-link">Log In</a></p>
             </div>
     <script>
+        function getUsers() {
+            try {
+                return JSON.parse(localStorage.getItem('spotifyUsers') || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('spotifyUsers', JSON.stringify(users));
+        }
+
         document.getElementById('signupForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('firstName')?.value.trim() || '';
+            const lastName = document.getElementById('lastName')?.value.trim() || '';
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
 
-            if (email && password) {
-                // Store user data in localStorage
-                localStorage.setItem('spotifyUser', JSON.stringify({
-                    name:name,
-                    email: email,
-                    loggedIn: true,
-                    loginTime: new Date().toLocaleString(),
-                    password: password
-                }));
-
-                // Redirect to main page
-                window.location.href = 'index.html';
+            if (!email || !password) {
+                alert('Please enter your email and password.');
+                return;
             }
+
+            const existingUsers = getUsers();
+            const alreadyExists = existingUsers.some((user) => String(user.email || '').toLowerCase() === email.toLowerCase());
+            if (alreadyExists) {
+                alert('This email is already registered. Please log in.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const newUser = {
+                name: `${firstName} ${lastName}`.trim() || 'Spotify User',
+                email: email,
+                password: password,
+                createdAt: new Date().toISOString()
+            };
+
+            saveUsers([...existingUsers, newUser]);
+
+            localStorage.setItem('spotifyUser', JSON.stringify({
+                name: newUser.name,
+                email: newUser.email,
+                loggedIn: true,
+                loginTime: new Date().toLocaleString(),
+                password: newUser.password
+            }));
+
+            window.location.href = 'index.html';
         });
 
         document.querySelector('.login-link').addEventListener('click', function() {

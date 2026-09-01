@@ -79,40 +79,60 @@
             document.getElementById('phoneNumber').value = '';
         }
 
+        function getUsers() {
+            try {
+                return JSON.parse(localStorage.getItem('spotifyUsers') || '[]');
+            } catch {
+                return [];
+            }
+        }
+
         function continueWithPhone() {
             const phone = document.getElementById('phoneNumber').value.trim();
             if (phone.length < 10) {
                 alert('Please enter a valid phone number');
                 return;
             }
-            // Store user data in localStorage
             localStorage.setItem('spotifyUser', JSON.stringify({
                 phone: phone,
                 loggedIn: true,
                 loginTime: new Date().toLocaleString()
             }));
-            // Redirect to main page
             window.location.href = 'index.html';
         }
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const email = document.getElementById('email').value;
+
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+            const users = getUsers();
+            const matchedUser = users.find((user) => String(user.email || '').toLowerCase() === email.toLowerCase());
 
-            if (email && password) {
-                // Store user data in localStorage
-                localStorage.setItem('spotifyUser', JSON.stringify({
-                    email: email,
-                    loggedIn: true,
-                    loginTime: new Date().toLocaleString(),
-                    password: password
-                }));
-
-                // Redirect to main page
-                window.location.href = 'index.html';
+            if (!email || !password) {
+                alert('Please enter both email and password.');
+                return;
             }
+
+            if (matchedUser && matchedUser.password !== password) {
+                alert('Incorrect password. Please try again.');
+                return;
+            }
+
+            if (!matchedUser) {
+                alert('No account found for this email. Please sign up first.');
+                window.location.href = 'signup.html';
+                return;
+            }
+
+            localStorage.setItem('spotifyUser', JSON.stringify({
+                name: matchedUser.name || matchedUser.email,
+                email: matchedUser.email,
+                loggedIn: true,
+                loginTime: new Date().toLocaleString(),
+                password: matchedUser.password
+            }));
+            window.location.href = 'index.html';
         });
 
         document.querySelector('.signup-link').addEventListener('click', function() {
