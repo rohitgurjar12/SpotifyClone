@@ -2,6 +2,8 @@
 
 A Spotify-inspired web music player built with vanilla HTML, CSS, and JavaScript. Enjoy browsing songs, creating playlists, managing wishlist and liked songs, and playing previews—all while keeping your account data separate and secure.
 
+[Live Link](https://spotifycl0ne.vercel.app/)
+
 ## Features
 
 ### 🎵 Music Player
