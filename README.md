@@ -90,31 +90,9 @@ All storage keys are scoped to the logged-in user's identity (email/phone/name) 
 - Optimized touch targets and spacing
 - Landscape and portrait support
 
-## Requirements
+## About Me
 
-- Modern browser with localStorage support (Chrome, Firefox, Safari, Edge)
-- Internet connection for iTunes API song search and preview streaming
+Hi, I'm **Rohit Gurjar**, a Full-Stack Web Developer and the creator of Spotify Clone.
 
-## Notes
-
-- This is a client-side only app; no backend server is required
-- All data persists in browser localStorage and survives page refreshes
-- Song previews are 30-second clips provided by iTunes API
-- Maximum 12 playlists and songs per playlist is recommended for optimal performance
-
-## Future Enhancements
-
-- Backend API for multi-device sync
-- Audio waveform visualization
-- Recently played history
-- Dark/Light theme toggle
-- Social sharing features
-- Offline mode with cached songs
-
-## License
-
-Open source for educational purposes.
-
-## About
-
-Built as a learning project to explore responsive web design, browser storage, and REST API integration.
+- GitHub: [rohitgurjar12](https://github.com/rohitgurjar12)
+- LinkedIn: [rohitgurjar12](https://www.linkedin.com/in/rohitgurjar12)
